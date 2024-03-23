@@ -8,3 +8,13 @@ Content-Type: application/json
 	"email": "johndoe@gmail.comm",
 	"password": "1234576"
 }
+
+###
+
+POST {{baseUrl}}/session
+Content-Type: application/json
+
+{
+	"email": "johndoe@gmail.comm",
+	"password": "1234576"
+}
