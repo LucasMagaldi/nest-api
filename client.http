@@ -30,8 +30,8 @@ Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-	"title": "hahxsaha",
-	"content": "haxshaha"
+	"title": "hahxsahxxa",
+	"content": "haxx-mdleshaha"
 }
 
 
@@ -39,3 +39,4 @@ Authorization: Bearer {{authToken}}
 
 # @name fetch_questions
 GET {{baseUrl}}/questions
+Content-Type: application/json
