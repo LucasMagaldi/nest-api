@@ -1,8 +1,6 @@
-import { Body, ConflictException, Controller, HttpCode, Post, Req, UnauthorizedException, UseGuards, UsePipes } from "@nestjs/common"
+import { Body, Controller, HttpCode, Post, UseGuards } from "@nestjs/common"
 import { JwtService } from "@nestjs/jwt"
 import { AuthGuard } from "@nestjs/passport"
-import { compare } from "bcryptjs"
-import { Request } from "express"
 import { CurrentUser } from "src/aurh/current-user-decorator"
 import { TokenSchema } from "src/aurh/jwt-strategy"
 import { ZodValidationPipe } from "src/pipes/zod-validation-pipe"
@@ -18,7 +16,6 @@ type CreateQuestionBody = z.infer<typeof createQuestionBodySchema>
 
 @Controller("/question")
 @UseGuards(AuthGuard('jwt'))
-@UsePipes(new ZodValidationPipe(createQuestionBodySchema))
 
 export class CreateQuestionController {
     constructor(
@@ -29,17 +26,18 @@ export class CreateQuestionController {
     @HttpCode(201)
     async handler(
         @CurrentUser() user: TokenSchema,
-        @Body() body: CreateQuestionBody,
+        @Body(new ZodValidationPipe(createQuestionBodySchema)) body: CreateQuestionBody,
     ) {
         const userId = user.sub
         const { title, content } = body
+        const slug = this.convertToSlug(title)
 
         await this.prisma.question.create({
             data: {
                 authorId: userId,
                 title,
                 content,
-                slug: this.convertToSlug(title)
+                slug
             }
         })
     }
