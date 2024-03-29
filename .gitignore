@@ -1,8 +1,8 @@
 .env
 data
 node_modules
-private_key.pem
-public_key.pem
+./private_key.pem
+./public_key.pem
 # compiled output
 /dist
 /node_modules
