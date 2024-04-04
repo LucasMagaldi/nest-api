@@ -1,15 +1,16 @@
-import { randomUUID } from "crypto"
+import { Entity } from "@/core/entities/entity"
+import { UniqueEntityID } from "@/core/value-objects/unique-entity-id"
 
-export class Answer {
-    public id: string
-    public content: string
-    public authorId: string
-    public questionId: string
+interface AnswerProps {
+    authorId: UniqueEntityID
+    questionId: UniqueEntityID
+    content: string
+    createdAt: Date
+    updatedAt?: Date
+}
 
-    constructor(content: string, authorId: string, questionId: string, id?: string) {
-        this.id = id ?? randomUUID()
-        this.content = content
-        this.authorId = authorId
-        this.questionId = questionId
+export class Answer extends Entity<AnswerProps> {
+    get content() {
+        return this.props.content
     }
 }
